@@ -6,12 +6,12 @@ export class YoutubeScraperController {
 
   @Get('subtitles-ytdlp')
   async getSubtitlesYtDlp(
-    @Query('videoId') videoId: string,
+    @Query('videoUrl') videoUrl: string,
     @Query('lang') lang?: string,
   ) {
-    if (!videoId) {
+    if (!videoUrl) {
       throw new Error('Video ID is required');
     }
-    return this.youtubeScraperService.getSubtitlesYtDlp(videoId, lang);
+    return this.youtubeScraperService.getSubtitlesYtDlp(videoUrl, lang);
   }
 }
