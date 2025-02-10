@@ -1,6 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { YoutubeScraperService } from './youtube-scraper.service';
-
 @Controller('youtube-scraper')
 export class YoutubeScraperController {
   constructor(private readonly youtubeScraperService: YoutubeScraperService) {}

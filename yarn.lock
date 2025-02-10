@@ -1462,6 +1462,13 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
+axios@^0.21.0:
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
+
 b4a@^1.6.4:
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/b4a/-/b4a-1.6.7.tgz#a99587d4ebbfbd5a6e3b21bdb5d5fa385767abe4"
@@ -1842,6 +1849,11 @@ co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==
+
+collapse-white-space@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-2.1.0.tgz#640257174f9f42c740b40f3b55ee752924feefca"
+  integrity sha512-loKTxY1zCOuG4j9f6EPnuyyYkf58RnhhWTvRoZEokgB+WbdXehfjFviyOVYkqzEWz1Q5kRiZdBYS5SwxbQYwzw==
 
 collect-v8-coverage@^1.0.0:
   version "1.0.2"
@@ -2617,6 +2629,11 @@ flatted@^3.2.9:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.3.2.tgz#adba1448a9841bec72b42c532ea23dbbedef1a27"
   integrity sha512-AiwGJM8YcNOaobumgtng+6NHuOqC3A7MixFeDafM3X9cIUM+xUXoS5Vfgf+OihAYe20fxqNM9yPBXJzRtZ/4eA==
 
+follow-redirects@^1.14.0:
+  version "1.15.9"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.9.tgz#a604fa10e443bf98ca94228d9eebcc2e8a2c8ee1"
+  integrity sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==
+
 foreground-child@^3.1.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/foreground-child/-/foreground-child-3.3.0.tgz#0ac8644c06e431439f8561db8ecf29a7b5519c77"
@@ -2665,6 +2682,13 @@ forwarded@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
+
+franc@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/franc/-/franc-6.2.0.tgz#2ced94b49b1df10bdebb8ab2cdfb57aa5551daa5"
+  integrity sha512-rcAewP7PSHvjq7Kgd7dhj82zE071kX5B4W1M4ewYMf/P+i6YsDQmj62Xz3VQm9zyUzUXwhIde/wHLGCMrM+yGg==
+  dependencies:
+    trigram-utils "^2.0.0"
 
 fresh@0.5.2:
   version "0.5.2"
@@ -3623,6 +3647,13 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
+langdetect@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/langdetect/-/langdetect-0.2.1.tgz#d7ca8339497a4dd65c4df935d46e344bfea86d01"
+  integrity sha512-vWK2xz8Urp6J0RFwnrR8+d0DQ2yIGjCOqAxBoXNMVFv4ZDmFsbCcNEtwuVnaQ5+ltwZ4Z5rTtuTwHSaEWFdw+A==
+  dependencies:
+    unicode-9.0.0 "0.7.0"
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -3873,6 +3904,11 @@ mute-stream@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-1.0.0.tgz#e31bd9fe62f0aed23520aa4324ea6671531e013e"
   integrity sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==
+
+n-gram@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/n-gram/-/n-gram-2.0.2.tgz#e544a7dffefc49c22d898b2f491e787941b3a2ba"
+  integrity sha512-S24aGsn+HLBxUGVAUFOwGpKs7LBcG4RudKU//eWzt/mQ97/NMKQxDWHyHx63UNWk/OOdihgmzoETn1tf5nQDzQ==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -4953,6 +4989,14 @@ tree-kill@1.2.2:
   resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
   integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
 
+trigram-utils@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/trigram-utils/-/trigram-utils-2.0.1.tgz#d22c08350f2cc7ae02ce6d497732db3ef43c8722"
+  integrity sha512-nfWIXHEaB+HdyslAfMxSqWKDdmqY9I32jS7GnqpdWQnLH89r6A5sdk3fDVYqGAZ0CrT8ovAFSAo6HRiWcWNIGQ==
+  dependencies:
+    collapse-white-space "^2.0.0"
+    n-gram "^2.0.0"
+
 ts-api-utils@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-2.0.1.tgz#660729385b625b939aaa58054f45c058f33f10cd"
@@ -5093,6 +5137,11 @@ undici-types@~6.20.0:
   version "6.20.0"
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.20.0.tgz#8171bf22c1f588d1554d55bf204bc624af388433"
   integrity sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==
+
+unicode-9.0.0@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/unicode-9.0.0/-/unicode-9.0.0-0.7.0.tgz#4d303caf9c6dbf2b979943c18a384e226643b937"
+  integrity sha512-aqL0GQ3LB2nC3ZEKBZ93hfn7QY80sVGk+OT9Sc6lTxl4wRiwzUBRlAjJB9Fe4+5XydXOV+tb8udp5oRBoED5Tw==
 
 universalify@^2.0.0:
   version "2.0.1"
@@ -5349,6 +5398,13 @@ youtube-caption-extractor@^1.4.3:
     striptags "^3.2.0"
     ts-node "^10.9.1"
     typescript "^5.0.4"
+
+youtube-search-api@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/youtube-search-api/-/youtube-search-api-1.2.2.tgz#28261062805e377d90e90c916c0521607d1d9c0c"
+  integrity sha512-zvC+3pDS5Cclv+n+EFunaHzTMAAgt88x5Cth5KpT1xL5Pic30U5oSN2HwFL7rofT8ffDrkitAmBK5UOo9JzjlA==
+  dependencies:
+    axios "^0.21.0"
 
 youtube-transcript@^1.2.1:
   version "1.2.1"

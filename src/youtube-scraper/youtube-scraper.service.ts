@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
 import { YoutubeTranscript } from 'youtube-transcript';
 import { getSubtitles } from 'youtube-caption-extractor';
-
+import { GetVideoDetails } from 'youtube-search-api';
+import { detect } from 'langdetect';
 @Injectable()
 export class YoutubeScraperService {
   async fetchYouTubeHTML(videoUrl: string): Promise<string> {
@@ -34,9 +35,11 @@ export class YoutubeScraperService {
 
   async getCaptions(videoId: string): Promise<any[]> {
     try {
+      const a = await GetVideoDetails(videoId);
+      const langCode = detect(a?.title);
       const captions = await getSubtitles({
         videoID: videoId,
-        lang: 'en', // можна змінити мову за потребою
+        lang: langCode[0]?.lang || 'en',
       });
       return captions;
     } catch (error) {
