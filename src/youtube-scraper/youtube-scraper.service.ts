@@ -6,6 +6,10 @@ import { GetVideoDetails } from 'youtube-search-api';
 import { detect } from 'langdetect';
 import { decode } from 'he';
 import striptags from 'striptags';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
 
 @Injectable()
 export class YoutubeScraperService {
@@ -132,5 +136,26 @@ export class YoutubeScraperService {
         return acc;
       }, []);
     return { captionTracks, lines };
+  }
+
+  async getSubtitlesYtDlp(videoId: string, lang = 'en') {
+    try {
+      const { stdout } = await execAsync(
+        `yt-dlp --write-sub --sub-lang ${lang} --skip-download --write-auto-sub https://www.youtube.com/watch?v=${videoId}`,
+      );
+
+      // Читаємо створений файл субтитрів
+      const { stdout: subs } = await execAsync(`cat *.vtt`);
+
+      // Видаляємо тимчасові файли
+      await execAsync('rm *.vtt');
+
+      return {
+        subtitles: subs,
+        info: stdout,
+      };
+    } catch (error) {
+      throw new Error(`Failed to fetch subtitles: ${error.message}`);
+    }
   }
 }
