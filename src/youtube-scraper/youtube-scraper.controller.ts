@@ -27,4 +27,11 @@ export class YoutubeScraperController {
     }
     return this.youtubeScraperService.getCaptions(videoId);
   }
+  @Get('captions2')
+  async getCaptions2(@Query('videoId') videoId: string) {
+    if (!videoId) {
+      throw new Error('Video ID is required');
+    }
+    return this.youtubeScraperService.getCaptions2(videoId);
+  }
 }

@@ -24,10 +24,12 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "franc": "^6.2.0",
+    "he": "^1.2.0",
     "langdetect": "^0.2.1",
     "puppeteer": "^24.2.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "striptags": "^3.2.0",
     "youtube-caption-extractor": "^1.4.3",
     "youtube-search-api": "^1.2.2",
     "youtube-transcript": "^1.2.1"
