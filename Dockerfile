@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y \
 # Додайте ці рядки після встановлення Chrome
 RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
 RUN chmod a+rx /usr/local/bin/yt-dlp
+RUN apt-get install -y python3-pip
+RUN pip3 install browser-cookie3
 
 # Встановлення робочої директорії
 WORKDIR /app

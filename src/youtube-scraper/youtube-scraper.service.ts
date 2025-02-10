@@ -15,7 +15,7 @@ export class YoutubeScraperService {
       }
 
       const { stdout } = await execAsync(
-        `yt-dlp --write-sub --sub-lang ${lang} --skip-download --write-auto-sub https://www.youtube.com/watch?v=${videoId}`,
+        `yt-dlp --cookies-from-browser chrome --write-sub --sub-lang ${lang} --skip-download --write-auto-sub https://www.youtube.com/watch?v=${videoId}`,
       );
 
       const { stdout: subs } = await execAsync(`cat *.vtt`);
@@ -27,6 +27,11 @@ export class YoutubeScraperService {
         info: stdout,
       };
     } catch (error) {
+      if (error.message.includes("confirm you're not a bot")) {
+        throw new Error(
+          'YouTube requires authentication. Please try again later or use a different method.',
+        );
+      }
       throw new Error(`Failed to fetch subtitles: ${error.message}`);
     }
   }
