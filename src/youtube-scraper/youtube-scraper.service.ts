@@ -39,7 +39,7 @@ export class YoutubeScraperService {
       const langCode = detect(a?.title);
       const captions = await getSubtitles({
         videoID: videoId,
-        lang: langCode[0]?.lang || 'en',
+        lang: 'en',
       });
       return captions;
     } catch (error) {
