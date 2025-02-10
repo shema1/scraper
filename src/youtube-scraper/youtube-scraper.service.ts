@@ -37,6 +37,8 @@ export class YoutubeScraperService {
     try {
       const a = await GetVideoDetails(videoId);
       const langCode = detect(a?.title);
+
+      console.log('langCode[0]?.lang ', langCode[0]?.lang);
       const captions = await getSubtitles({
         videoID: videoId,
         // lang: 'en',
