@@ -12,4 +12,20 @@ export class YoutubeScraperController {
     }
     return this.youtubeScraperService.fetchYouTubeHTML(videoUrl);
   }
+
+  @Get('transcript')
+  async getTranscript(@Query('videoId') videoId: string) {
+    if (!videoId) {
+      throw new Error('Video ID is required');
+    }
+    return this.youtubeScraperService.getTranscript(videoId);
+  }
+
+  @Get('captions')
+  async getCaptions(@Query('videoId') videoId: string) {
+    if (!videoId) {
+      throw new Error('Video ID is required');
+    }
+    return this.youtubeScraperService.getCaptions(videoId);
+  }
 }

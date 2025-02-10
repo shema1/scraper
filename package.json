@@ -25,7 +25,9 @@
     "@nestjs/platform-express": "^10.0.0",
     "puppeteer": "^24.2.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "youtube-caption-extractor": "^1.4.3",
+    "youtube-transcript": "^1.2.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

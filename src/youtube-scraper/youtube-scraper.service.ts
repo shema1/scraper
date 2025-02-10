@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
+import { YoutubeTranscript } from 'youtube-transcript';
+import { getSubtitles } from 'youtube-caption-extractor';
 
 @Injectable()
 export class YoutubeScraperService {
@@ -19,5 +21,26 @@ export class YoutubeScraperService {
     const html = await page.content();
     await browser.close();
     return html;
+  }
+
+  async getTranscript(videoId: string) {
+    try {
+      const transcript = await YoutubeTranscript.fetchTranscript(videoId);
+      return transcript;
+    } catch (error) {
+      throw new Error(`Failed to fetch transcript: ${error.message}`);
+    }
+  }
+
+  async getCaptions(videoId: string): Promise<any[]> {
+    try {
+      const captions = await getSubtitles({
+        videoID: videoId,
+        lang: 'en', // можна змінити мову за потребою
+      });
+      return captions;
+    } catch (error) {
+      throw new Error(`Failed to fetch captions: ${error.message}`);
+    }
   }
 }
