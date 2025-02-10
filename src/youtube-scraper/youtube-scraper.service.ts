@@ -65,14 +65,14 @@ export class YoutubeScraperService {
     // Check if the video page contains captions
     if (!data.includes('captionTracks')) {
       console.warn(`No captions found for video: ${videoID}`);
-      return [];
+      return `res 1`;
     }
     // Extract caption tracks JSON string from video page data
     const regex = /"captionTracks":(\[.*?\])/;
     const regexResult = regex.exec(data);
     if (!regexResult) {
       console.warn(`Failed to extract captionTracks from video: ${videoID}`);
-      return [];
+      return `res2`;
     }
     const [_, captionTracksJson] = regexResult;
     const captionTracks = JSON.parse(captionTracksJson);
@@ -89,7 +89,7 @@ export class YoutubeScraperService {
       !(subtitle === null || subtitle === void 0 ? void 0 : subtitle.baseUrl)
     ) {
       console.warn(`Could not find ${lang} captions for ${videoID}`);
-      return [];
+      return `res3 ${captionTracks}`;
     }
     // Fetch subtitles XML from the subtitle track URL
     const subtitlesResponse = await fetch(subtitle.baseUrl);
