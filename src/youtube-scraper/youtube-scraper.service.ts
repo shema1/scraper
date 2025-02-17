@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as puppeteer from 'puppeteer';
 import { youtube_v3 } from '@googleapis/youtube';
 import axios from 'axios';
 import { Buffer } from 'buffer';
@@ -11,27 +10,8 @@ export class YoutubeScraperService {
 
   constructor() {
     this.youtubeClient = new youtube_v3.Youtube({
-      // auth: process.env.YOUTUBE_API_KEY,
-      auth: 'AIzaSyCxnf0g9rzE4TgKIn6m8wrN4seoT4fT6p4',
+      auth: process.env.YOUTUBE_API_KEY,
     });
-  }
-
-  async fetchYouTubeHTML(videoUrl: string): Promise<string> {
-    const browser = await puppeteer.launch({
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-      ],
-      headless: true,
-      executablePath: '/usr/bin/chromium',
-    });
-    const page = await browser.newPage();
-    await page.goto(videoUrl, { waitUntil: 'networkidle2' });
-    const html = await page.content();
-    await browser.close();
-    return html;
   }
 
   async getSubtitles(videoUrl: string) {
@@ -115,16 +95,17 @@ export class YoutubeScraperService {
       );
     }
 
-    let subtitles = '';
-    initialSegments.forEach((segment) => {
+    return initialSegments.map((segment) => {
       const line =
         segment.transcriptSectionHeaderRenderer ||
         segment.transcriptSegmentRenderer;
-      const text = this.extractText(line.snippet);
-      subtitles += text + '. ';
-    });
 
-    return subtitles;
+      return {
+        startTime: parseInt(line.startMs) / 1000,
+        endTime: parseInt(line.endMs) / 1000,
+        text: this.extractText(line.snippet),
+      };
+    });
   }
 
   private getBase64Protobuf(message) {
