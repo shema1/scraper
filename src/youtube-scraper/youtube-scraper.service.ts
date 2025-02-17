@@ -49,13 +49,36 @@ export class YoutubeScraperService {
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-gpu',
+        '--window-size=1920,1080',
+        '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
       ],
       headless: true,
     });
 
     try {
       const page = await browser.newPage();
-      await page.goto('https://www.youtube.com', { waitUntil: 'networkidle2' });
+      await page.setViewport({ width: 1920, height: 1080 });
+
+      // Встановлюємо додаткові заголовки
+      await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en-US,en;q=0.9',
+      });
+
+      // Емулюємо затримку введення як реальний користувач
+      await page.goto('https://www.youtube.com', {
+        waitUntil: 'networkidle2',
+        timeout: 30000,
+      });
+
+      // Чекаємо трохи, щоб YouTube "повірив" що ми реальний користувач
+      await new Promise((r) => setTimeout(r, 5000));
+
+      // Скролимо сторінку як реальний користувач
+      await page.evaluate(() => {
+        window.scrollBy(0, 500);
+      });
+
+      await new Promise((r) => setTimeout(r, 2000));
 
       const cookies = await page.cookies();
       const cookiesPath = path.join(process.cwd(), 'cookies.txt');
@@ -68,18 +91,22 @@ export class YoutubeScraperService {
         '',
         ...cookies.map((cookie) =>
           [
-            '.youtube.com', // domain
-            'TRUE', // domain_specified
-            cookie.path, // path
-            cookie.secure.toString().toUpperCase(), // secure
-            Math.floor(Date.now() / 1000 + 365 * 24 * 3600), // expiration
-            cookie.name, // name
-            cookie.value, // value
+            cookie.domain || '.youtube.com', // використовуємо оригінальний домен cookie
+            'TRUE',
+            cookie.path,
+            cookie.secure.toString().toUpperCase(),
+            Math.floor(cookie.expires || Date.now() / 1000 + 365 * 24 * 3600),
+            cookie.name,
+            cookie.value,
           ].join('\t'),
         ),
       ].join('\n');
 
       await fs.writeFile(cookiesPath, formattedCookies);
+
+      // Виводимо cookies для дебагу
+      console.log('Cookies saved:', cookies.length);
+      console.log('First cookie example:', cookies[0]);
 
       return cookiesPath;
     } finally {
