@@ -13,14 +13,19 @@ RUN apt-get update && apt-get install -y \
     chromium \
     chromium-sandbox \
     ffmpeg \
-    python3-pip
+    python3-pip \
+    python3-venv
 
 # Встановлення yt-dlp
 RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
 RUN chmod a+rx /usr/local/bin/yt-dlp
 
-# Встановлення Whisper
-RUN pip3 install -U openai-whisper
+# Створення та активація віртуального середовища Python
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Встановлення Whisper у віртуальному середовищі
+RUN pip3 install --no-cache-dir openai-whisper
 
 # Встановлення робочої директорії
 WORKDIR /app
