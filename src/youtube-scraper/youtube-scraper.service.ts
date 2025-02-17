@@ -38,10 +38,13 @@ export class YoutubeScraperService {
       const tempDir = path.join(process.cwd(), 'temp');
       await fs.mkdir(tempDir, { recursive: true });
 
-      // Скачуємо аудіо
+      // Отримуємо cookies через Puppeteer
+      const cookiesPath = await this.getYoutubeCookies();
+
+      // Скачуємо аудіо з використанням cookies
       const outputPath = path.join(tempDir, `${videoId}.mp3`);
       await execAsync(
-        `yt-dlp -x --audio-format mp3 -o "${outputPath}" ${videoUrl}`,
+        `yt-dlp -x --audio-format mp3 --cookies ${cookiesPath} -o "${outputPath}" ${videoUrl}`,
       );
 
       // Конвертуємо аудіо в текст використовуючи Whisper
@@ -51,6 +54,7 @@ export class YoutubeScraperService {
 
       // Видаляємо тимчасові файли
       await fs.unlink(outputPath);
+      await fs.unlink(cookiesPath);
 
       return {
         videoId,
@@ -58,6 +62,62 @@ export class YoutubeScraperService {
       };
     } catch (error) {
       throw new Error(`Failed to get transcription: ${error.message}`);
+    }
+  }
+
+  private async getYoutubeCookies(): Promise<string> {
+    const browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--window-size=1920,1080',
+      ],
+      headless: true,
+      executablePath: '/usr/bin/chromium',
+    });
+
+    try {
+      const page = await browser.newPage();
+      await page.setViewport({ width: 1920, height: 1080 });
+
+      await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en-US,en;q=0.9',
+      });
+
+      await page.goto('https://www.youtube.com', {
+        waitUntil: 'networkidle2',
+        timeout: 30000,
+      });
+
+      await new Promise((r) => setTimeout(r, 5000));
+
+      const cookies = await page.cookies();
+      const cookiesPath = path.join(process.cwd(), 'cookies.txt');
+
+      const formattedCookies = [
+        '# Netscape HTTP Cookie File',
+        '# https://curl.haxx.se/rfc/cookie_spec.html',
+        '# This is a generated file!  Do not edit.',
+        '',
+        ...cookies.map((cookie) =>
+          [
+            cookie.domain || '.youtube.com',
+            'TRUE',
+            cookie.path,
+            cookie.secure.toString().toUpperCase(),
+            Math.floor(cookie.expires || Date.now() / 1000 + 365 * 24 * 3600),
+            cookie.name,
+            cookie.value,
+          ].join('\t'),
+        ),
+      ].join('\n');
+
+      await fs.writeFile(cookiesPath, formattedCookies);
+      return cookiesPath;
+    } finally {
+      await browser.close();
     }
   }
 
