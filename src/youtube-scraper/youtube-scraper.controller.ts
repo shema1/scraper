@@ -12,4 +12,12 @@ export class YoutubeScraperController {
     }
     return this.youtubeScraperService.fetchYouTubeHTML(videoUrl);
   }
+
+  @Get('subtitles')
+  async getSubtitles(@Query('url') videoUrl: string) {
+    if (!videoUrl) {
+      throw new Error('URL is required');
+    }
+    return this.youtubeScraperService.getSubtitles(videoUrl);
+  }
 }
