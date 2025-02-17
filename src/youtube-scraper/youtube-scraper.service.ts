@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import * as url from 'url';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+import puppeteer from 'puppeteer';
 
 const execAsync = promisify(exec);
 
@@ -14,13 +17,16 @@ export class YoutubeScraperService {
         throw new Error('Invalid YouTube URL format');
       }
 
+      const cookiesPath = await this.getYoutubeCookies();
+
       const { stdout } = await execAsync(
-        `yt-dlp --cookies-from-browser chrome --write-sub --sub-lang ${lang} --skip-download --write-auto-sub https://www.youtube.com/watch?v=${videoId}`,
+        `yt-dlp --cookies ${cookiesPath} --write-sub --sub-lang ${lang} --skip-download --write-auto-sub https://www.youtube.com/watch?v=${videoId}`,
       );
 
       const { stdout: subs } = await execAsync(`cat *.vtt`);
-
       await execAsync('rm *.vtt');
+
+      await fs.unlink(cookiesPath);
 
       return {
         subtitles: subs,
@@ -33,6 +39,36 @@ export class YoutubeScraperService {
         );
       }
       throw new Error(`Failed to fetch subtitles: ${error.message}`);
+    }
+  }
+
+  private async getYoutubeCookies(): Promise<string> {
+    const browser = await puppeteer.launch({
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+      ],
+      headless: true,
+    });
+
+    try {
+      const page = await browser.newPage();
+      await page.goto('https://www.youtube.com', { waitUntil: 'networkidle2' });
+
+      const cookies = await page.cookies();
+      const cookiesPath = path.join(process.cwd(), 'cookies.txt');
+
+      const formattedCookies = cookies
+        .map((cookie) => `${cookie.name}\t${cookie.value}`)
+        .join('\n');
+
+      await fs.writeFile(cookiesPath, formattedCookies);
+
+      return cookiesPath;
+    } finally {
+      await browser.close();
     }
   }
 
