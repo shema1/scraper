@@ -11,7 +11,16 @@ RUN apt-get update && apt-get install -y \
     libgbm-dev \
     libasound2 \
     chromium \
-    chromium-sandbox
+    chromium-sandbox \
+    ffmpeg \
+    python3-pip
+
+# Встановлення yt-dlp
+RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+RUN chmod a+rx /usr/local/bin/yt-dlp
+
+# Встановлення Whisper
+RUN pip3 install -U openai-whisper
 
 # Встановлення робочої директорії
 WORKDIR /app
