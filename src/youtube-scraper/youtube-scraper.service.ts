@@ -60,9 +60,24 @@ export class YoutubeScraperService {
       const cookies = await page.cookies();
       const cookiesPath = path.join(process.cwd(), 'cookies.txt');
 
-      const formattedCookies = cookies
-        .map((cookie) => `${cookie.name}\t${cookie.value}`)
-        .join('\n');
+      // Форматуємо cookies у форматі Netscape
+      const formattedCookies = [
+        '# Netscape HTTP Cookie File',
+        '# https://curl.haxx.se/rfc/cookie_spec.html',
+        '# This is a generated file!  Do not edit.',
+        '',
+        ...cookies.map((cookie) =>
+          [
+            '.youtube.com', // domain
+            'TRUE', // domain_specified
+            cookie.path, // path
+            cookie.secure.toString().toUpperCase(), // secure
+            Math.floor(Date.now() / 1000 + 365 * 24 * 3600), // expiration
+            cookie.name, // name
+            cookie.value, // value
+          ].join('\t'),
+        ),
+      ].join('\n');
 
       await fs.writeFile(cookiesPath, formattedCookies);
 
